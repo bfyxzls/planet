@@ -5,12 +5,15 @@ from sys import exit
 import random
 import math
 
-
+bulletImage="/Users/lind.zhang/github/planet/son/img/bullet.png"
+planeImage="/Users/lind.zhang/github/planet/son/img/plane.png"
+bossImage="/Users/lind.zhang/github/planet/son/img/boss.png"
+bgImage="/Users/lind.zhang/github/planet/son/img/bg.png"
 class Bullet:
     def __init__(self):
         self.screen_height, self.screen_width = (800, 494)
         x, y = pygame.mouse.get_pos()
-        self.image = pygame.image.load('img/bullet.png').convert_alpha()
+        self.image = pygame.image.load(bulletImage).convert_alpha()
         self.bullet_height, self.bullet_width = (self.image.get_height(), self.image.get_width())
         self.bullet_x, self.bullet_y = (x - self.bullet_width / 2, y - self.bullet_height / 2)
         self.active = True  #子弹的状态
@@ -32,7 +35,7 @@ class Plane:
     def __init__(self):
         self.screen_height, self.screen_width = (800, 494)
 
-        self.image = pygame.image.load('img/plane.png').convert_alpha()
+        self.image = pygame.image.load(planeImage).convert_alpha()
         self.plane_height, self.plane_width = (self.image.get_height(), self.image.get_width())
         self.plane_x, self.plane_y = (self.screen_width / 2 - self.plane_width / 2, self.screen_height - self.plane_height - 20)
     def move(self):
@@ -42,7 +45,7 @@ class Plane:
 class Boss:
     def __init__(self):
         self.screen_height, self.screen_width = (800, 494)
-        self.image = pygame.image.load('img/boss.png').convert_alpha()
+        self.image = pygame.image.load(bossImage).convert_alpha()
         self.boss_height, self.boss_width = (self.image.get_height(), self.image.get_width())
         self.boss_x, self.boss_y = (random.uniform(0, self.screen_width - self.boss_width), 0 - self.boss_height)
         self.active = False
@@ -60,15 +63,15 @@ class Boss:
 pygame.init()
 pygame.mixer.init()
 
-backgroundMusic = pygame.mixer.Sound('./yinyue/battle.ogg')
-backgroundMusic.play()
-boom = pygame.mixer.Sound("./yinyue/boom.wav")
-boom.set_volume(0.4)
-planeBoom = pygame.mixer.Sound("./yinyue/planeBoom.wav")
-planeBoom.set_volume(0.2)
+# backgroundMusic = pygame.mixer.Sound('./yinyue/battle.ogg')
+# backgroundMusic.play()
+# boom = pygame.mixer.Sound("./yinyue/boom.wav")
+# boom.set_volume(0.4)
+# planeBoom = pygame.mixer.Sound("./yinyue/planeBoom.wav")
+# planeBoom.set_volume(0.2)
 screen = pygame.display.set_mode((494, 800), 0, 32)
 pygame.display.set_caption("飞机大战")
-background = pygame.image.load('img/bg.png').convert()
+background = pygame.image.load(bgImage).convert()
 #把背景画上去
 plane = Plane()
 #飞机
@@ -171,7 +174,7 @@ while True:
                 score += int(k.speed * 1000)
 
                 font_area = my_font.render("得分: " + str(score), True, (255, 0, 0))
-                boom.play()
+                # boom.play()
                 k.active = False
                 j.active = False
                 print(k.speed)
@@ -181,7 +184,7 @@ while True:
                         k.boss_x > plane.plane_x + plane.plane_width))) and (
                     not ((k.boss_y + k.boss_height < plane.plane_y) or (
                         k.boss_y > plane.plane_y + plane.plane_height))):
-                planeBoom.play()
+                # planeBoom.play()
                 print('死了')
                 clock.tick(15)
     plane.move()
