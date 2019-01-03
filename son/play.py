@@ -9,9 +9,11 @@ bulletImage="/Users/lind.zhang/github/planet/son/img/bullet.png"
 planeImage="/Users/lind.zhang/github/planet/son/img/plane.png"
 bossImage="/Users/lind.zhang/github/planet/son/img/boss.png"
 bgImage="/Users/lind.zhang/github/planet/son/img/bg.png"
+canvas=(320,400)
+
 class Bullet:
     def __init__(self):
-        self.screen_height, self.screen_width = (800, 494)
+        self.screen_height, self.screen_width = canvas
         x, y = pygame.mouse.get_pos()
         self.image = pygame.image.load(bulletImage).convert_alpha()
         self.bullet_height, self.bullet_width = (self.image.get_height(), self.image.get_width())
@@ -33,8 +35,7 @@ class Bullet:
 
 class Plane:
     def __init__(self):
-        self.screen_height, self.screen_width = (800, 494)
-
+        self.screen_height, self.screen_width = canvas
         self.image = pygame.image.load(planeImage).convert_alpha()
         self.plane_height, self.plane_width = (self.image.get_height(), self.image.get_width())
         self.plane_x, self.plane_y = (self.screen_width / 2 - self.plane_width / 2, self.screen_height - self.plane_height - 20)
@@ -44,12 +45,12 @@ class Plane:
 
 class Boss:
     def __init__(self):
-        self.screen_height, self.screen_width = (800, 494)
+        self.screen_height, self.screen_width = canvas
         self.image = pygame.image.load(bossImage).convert_alpha()
         self.boss_height, self.boss_width = (self.image.get_height(), self.image.get_width())
         self.boss_x, self.boss_y = (random.uniform(0, self.screen_width - self.boss_width), 0 - self.boss_height)
         self.active = False
-        self.speed = 0
+        self.speed = 100
     def attack(self):
         if self.active:
             self.boss_y += self.speed
@@ -69,7 +70,7 @@ pygame.mixer.init()
 # boom.set_volume(0.4)
 # planeBoom = pygame.mixer.Sound("./yinyue/planeBoom.wav")
 # planeBoom.set_volume(0.2)
-screen = pygame.display.set_mode((494, 800), 0, 32)
+screen = pygame.display.set_mode(canvas, 0, 32)
 pygame.display.set_caption("飞机大战")
 background = pygame.image.load(bgImage).convert()
 #把背景画上去
@@ -115,7 +116,7 @@ while True:
     interval_bullet -= 1
 
     if interval_bullet <= 0:
-        interval_bullet = 200
+        interval_bullet = 10
 
         indexB = math.floor(indexA / bossNum)
         if not bosses[indexB % bossNum].active:
@@ -159,13 +160,13 @@ while True:
     for j in bullets:
         j.shot()
         screen.blit(j.image, (j.bullet_x, j.bullet_y))
-    # 画上子弹
+        # 画上子弹
 
 
         for k in bosses:
             k.attack()
             screen.blit(k.image, (k.boss_x, k.boss_y))
-        # 画上Boss
+            # 画上Boss
 
             if (not ((k.boss_x + k.boss_width < j.bullet_x) or (
                 k.boss_x > j.bullet_x + j.bullet_width))) and (not (
