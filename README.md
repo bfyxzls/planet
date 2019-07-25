@@ -1,6 +1,15 @@
 # 小不点学python
 > 讲师：仓储大叔
-
+## 安装python3.7和game
+```
+# 下载后直接安装python3.7
+# 升级pip
+sudo pip3 install --upgrade pip
+# 安装game组件
+python3 -m pip install -U pygame --user
+# 配置vscode/settings.json文件，设置python3的目录
+which python3
+```
 ## 基本知识
 
 - [x] 键盘的功能
